@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { Typography, Card, CardContent, CardMedia, CardActions, IconButton, Grid, Divider, Checkbox, FormControlLabel, Button, CardActionArea, Avatar, CircularProgress } from '@mui/material';
+import { Typography, Card, CardContent, CardActions, IconButton, Grid, Divider, Avatar, CircularProgress, CardHeader } from '@mui/material';
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from '@mui/icons-material/Edit';
 import { Box } from '@mui/system';
@@ -8,19 +8,19 @@ import { fetchCards, removeCard } from '../state/reducers';
 import { AccountContext } from '../context/AccountProvider';
 import Modal from './Modal';
 import { getResult } from '../service/api';
+import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
 
 const RightBox = ({ onEditCard }) => {
 
     const cards = useSelector((state) => state.cards);
     const dispatch = useDispatch();
 
-    const [selectedCards, setSelectedCards] = useState([]);
     const [openIframe, setOpenIframe] = useState(false);
     const [clickedCard, setClickedCard] = useState(null);
     const [output, setOutput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const { account } = useContext(AccountContext);
-
+    
     const handleDeleteCard = (cardId) => {
         console.log(cardId);
         dispatch(removeCard(cardId));
@@ -45,19 +45,6 @@ const RightBox = ({ onEditCard }) => {
         setOpenIframe(true);
 
     }
-
-    const handleMultipleDeleteCard = () => {
-        selectedCards.forEach((cardId) => dispatch(removeCard(cardId)));
-        setSelectedCards([]);
-    };
-
-    const handleCardSelect = (cardId) => {
-        if (selectedCards.includes(cardId)) {
-            setSelectedCards(selectedCards.filter((id) => id !== cardId));
-        } else {
-            setSelectedCards([...selectedCards, cardId]);
-        }
-    };
 
     return (
         <Box alignItems="center" width="96%">
@@ -93,71 +80,50 @@ const RightBox = ({ onEditCard }) => {
                     >
                         {cards.length > 0 ? "Cards" : "Your cards will appear here..."}
                     </Typography>
-                    <Box display="flex" alignItems="center">
-                        {selectedCards.length > 0 && (
-                            <Box mr={2} >
-                                <Button
-                                    variant="contained" color="error"
-                                    onClick={handleMultipleDeleteCard}>
-                                    Delete selected cards
-                                </Button>
-                            </Box>
-                        )}
-                    </Box>
                 </Box>
                 <Divider sx={{ mb: 2 }} />
                 <Grid container spacing={2}>
                     {cards.map((card) => (
                         <Grid item xs={12} md={6} lg={3} key={card.id}>
                             <Card style={{ backgroundColor: '#EEEEEE' }}>
-                                <CardActionArea onClick={() => handleCardClick(card)}>
-                                    <CardMedia
-                                        component="img"
-                                        color="#f0f0f0"
-                                        height="150"
-                                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Colonne_distillazione.jpg/250px-Colonne_distillazione.jpg"
-                                        title={card.numberOfTrays}
-                                    />
-                                </CardActionArea>
+                                <CardHeader
+                                    avatar={
+                                        <Avatar
+                                            alt="User"
+                                            src={account.picture}
+                                            style={{ marginLeft: 'auto' }}
+                                        />
+                                    }
+
+                                    title={<Typography sx={{ color: "#222831" }}>{account.name}</Typography>}
+                                    subheader={card.date}
+                                />
                                 <CardContent>
-                                    <Grid container spacing={4}
-                                        style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                        <Grid item><Typography gutterBottom variant="h6">
-                                            {account.name} </Typography>  </Grid><Grid item> <Avatar
-                                                alt="User"
-                                                src={account.picture}
-                                                style={{ marginLeft: 'auto' }}
-                                            /></Grid>
-                                    </Grid>
-                                    <Typography
-                                        variant="body2"
-                                        color="textSecondary"
-                                        component="p">
-                                        {card.date}
-                                    </Typography>
+                                    <Typography variant="body1" color="textSecondary">Number of Trays: {card?.numberOfTrays}</Typography>
+                                    <Typography variant="body1" color="textSecondary">Feed Tray Position: {card?.feedTrayPosition}</Typography>
+                                    <Typography variant="body1" color="textSecondary">Feed Composition: {card?.feedComposition}</Typography>
+                                    <Typography variant="body1" color="textSecondary">Feed Temperature: {card?.feedTemperature}</Typography>
+                                    <Typography variant="body1" color="textSecondary">Feed Flow Rate: {card?.flowRate}</Typography>
                                 </CardContent>
                                 <CardActions>
                                     <Grid container spacing={4} justifyContent="space-between" alignItems="center">
                                         <Grid item>
-                                            <IconButton onClick={() => handleEditCard(card)}>
-                                                <EditIcon />
+                                            <IconButton onClick={() => handleCardClick(card)}>
+                                                <PlayCircleFilledWhiteIcon
+                                                    sx={{ color: "#393E46" }}
+                                                />
                                             </IconButton>
                                         </Grid>
                                         <Grid item>
-                                            <Grid container spacing={0.000001} alignItems="center">
+                                            <Grid container spacing={1} alignItems="center">
                                                 <Grid item>
-                                                    <FormControlLabel
-                                                        control={
-                                                            <Checkbox
-                                                                checked={selectedCards.includes(card.id)}
-                                                                onChange={() => handleCardSelect(card.id)}
-                                                            />
-                                                        }
-                                                    />
+                                                    <IconButton onClick={() => handleEditCard(card)}>
+                                                        <EditIcon sx={{ color: "#393E46" }} />
+                                                    </IconButton>
                                                 </Grid>
                                                 <Grid item>
                                                     <IconButton onClick={() => handleDeleteCard(card.id)}>
-                                                        <DeleteIcon />
+                                                        <DeleteIcon sx={{ color: "#393E46" }} />
                                                     </IconButton>
                                                 </Grid>
                                             </Grid>

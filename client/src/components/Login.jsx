@@ -7,7 +7,7 @@ import { AccountContext } from '../context/AccountProvider';
 
 const dialogStyle = {
     marginTop: '9%',
-    height: '80%',
+    height: '68%',
     width: '34%',
     borderRadius: '3px',
     overflow: 'hidden',
@@ -59,7 +59,7 @@ const Login = ({ isUserAuthenticated }) => {
                                 <ol>
                                     <li>Sign in using your Google account.</li>
                                     <li>Enter the data required in the form fields.</li>
-                                    <li>Click on the card to see the results of the simulation.</li>
+                                    <li>Click the run button to see results of the simulation.</li>
                                     <li>Cards can be deleted/modified after creation.</li>
                                 </ol>
                             </Typography>
