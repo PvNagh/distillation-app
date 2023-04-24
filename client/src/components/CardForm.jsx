@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Typography, FormControl, InputLabel, Input, Grid } from '@mui/material';
+import { Button, Typography, FormControl, InputLabel, Input, Grid, TextField } from '@mui/material';
 import { Box } from '@mui/system';
 import { useDispatch } from 'react-redux';
 import { createCard, updateCard } from '../state/reducers';
@@ -9,15 +9,24 @@ import Filter3Icon from '@mui/icons-material/Filter3';
 import ScienceIcon from '@mui/icons-material/Science';
 import DeviceThermostatIcon from '@mui/icons-material/DeviceThermostat';
 import WaterIcon from '@mui/icons-material/Water';
+import WaterDropIcon from '@mui/icons-material/WaterDrop';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+import CompressIcon from '@mui/icons-material/Compress';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 const CardForm = ({ card, editMode, setEditMode }) => {
   const dispatch = useDispatch();
 
   const [numberOfTrays, setNumberOfTrays] = useState('');
   const [feedTrayPosition, setFeedTrayPosition] = useState('');
+  const [feedQuantity, setFeedQuantity] = useState('');
   const [feedComposition, setFeedComposition] = useState('');
   const [feedTemperature, setFeedTemperature] = useState('');
   const [flowRate, setFlowRate] = useState('');
+  const [columnPressure, setColumnPressure] = useState('');
+  const [typeCon, setTypeCon] = useState('');
+  const [rr, setRr] = useState('');
+  const [d, setD] = useState('');
   const [currentCard, setCurrentCard] = useState(null);
 
   useEffect(() => {
@@ -27,13 +36,23 @@ const CardForm = ({ card, editMode, setEditMode }) => {
       setFeedTrayPosition(card.feedTrayPosition);
       setFeedComposition(card.feedComposition);
       setFeedTemperature(card.feedTemperature);
+      setFeedQuantity(card.feedQuantity);
+      setColumnPressure(card.columnPressure);
+      setTypeCon(card.typeCon);
+      setRr(card.rr);
       setFlowRate(card.flowRate);
+      setD(card.d);
     } else {
       setNumberOfTrays('');
       setFeedTrayPosition('');
       setFeedComposition('');
       setFeedTemperature('');
+      setFeedQuantity('');
+      setColumnPressure('');
+      setTypeCon('');
+      setRr('');
       setFlowRate('');
+      setD('');
     }
   }, [card]);
 
@@ -47,6 +66,11 @@ const CardForm = ({ card, editMode, setEditMode }) => {
       numberOfTrays,
       feedTrayPosition,
       feedComposition,
+      feedQuantity,
+      rr,
+      d,
+      columnPressure,
+      typeCon,
       feedTemperature,
       flowRate,
       date: formattedDate,
@@ -63,7 +87,12 @@ const CardForm = ({ card, editMode, setEditMode }) => {
     setFeedTrayPosition('');
     setFeedComposition('');
     setFeedTemperature('');
+    setFeedQuantity('');
+    setColumnPressure('');
+    setTypeCon('');
+    setRr('');
     setFlowRate('');
+    setD('');
     setCurrentCard(null);
   };
   const handleReset = () => {
@@ -71,7 +100,12 @@ const CardForm = ({ card, editMode, setEditMode }) => {
     setFeedTrayPosition('');
     setFeedComposition('');
     setFeedTemperature('');
+    setFeedQuantity('');
+    setColumnPressure('');
+    setTypeCon('');
+    setRr('');
     setFlowRate('');
+    setD('');
     setCurrentCard(null);
   }
   return (
@@ -137,16 +171,33 @@ const CardForm = ({ card, editMode, setEditMode }) => {
                 <Input
                   name="Feed Composition"
                   value={feedComposition}
-                  type="number"
-                  inputProps={{ step: 0.01 }}
                   onChange={(event) =>
-                    setFeedComposition(parseFloat(event.target.value))
+                    setFeedComposition(event.target.value)
                   }
                   required={true}
                 />
               </FormControl>
             </Box>
           </Grid>
+          <Grid item xs={12}>
+            <Box display="flex" alignItems="flex-end" mt={2}>
+              <ScienceIcon sx={{ color: 'action.active', mr: 2, my: 1.1 }} />
+              <FormControl sx={{ flex: 1 }}>
+                <InputLabel htmlFor="Feed Quantity">Feed Quantity</InputLabel>
+                <Input
+                  name="Feed Quantity"
+                  value={feedQuantity}
+                  type="number"
+                  inputProps={{ step: 0.1 }}
+                  onChange={(event) =>
+                    setFeedQuantity(parseFloat(event.target.value))
+                  }
+                  required={true}
+                />
+              </FormControl>
+            </Box>
+          </Grid>
+
           <Grid item xs={12}>
             <Box display="flex" alignItems="flex-end" mt={2}>
               <DeviceThermostatIcon sx={{ color: 'action.active', mr: 2, my: 1.1 }} />
@@ -183,6 +234,79 @@ const CardForm = ({ card, editMode, setEditMode }) => {
               </FormControl>
             </Box>
           </Grid>
+          <Grid item xs={12}>
+            <Box display="flex" alignItems="flex-end" mt={2}>
+              <HelpOutlineIcon sx={{ color: 'action.active', mr: 2, my: 1.1 }} />
+              <FormControl sx={{ flex: 1 }}>
+                <InputLabel htmlFor="Type of condenser">Type of condenser</InputLabel>
+                <Input
+                  name="Type of condenser"
+                  value={typeCon}
+                  onChange={(event) =>
+                    setTypeCon(event.target.value)
+                  }
+                  required={true}
+                />
+              </FormControl>
+
+
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box display="flex" alignItems="flex-end" mt={2}>
+              <CompressIcon sx={{ color: 'action.active', mr: 2, my: 1.1 }} />
+              <FormControl sx={{ flex: 1 }}>
+                <InputLabel htmlFor="Column Pressure">Column Pressure</InputLabel>
+                <Input
+                  name="Column Pressure"
+                  value={columnPressure}
+                  type="number"
+                  inputProps={{ step: 0.1 }}
+                  onChange={(event) =>
+                    setColumnPressure(parseFloat(event.target.value))
+                  }
+                  required={true}
+                />
+              </FormControl>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box display="flex" alignItems="flex-end" mt={2}>
+              <KeyboardReturnIcon sx={{ color: 'action.active', mr: 2, my: 1.1 }} />
+              <FormControl sx={{ flex: 1 }}>
+                <InputLabel htmlFor="Reflux Ratio">Reflux Ratio</InputLabel>
+                <Input
+                  name="Reflux Ratio"
+                  value={rr}
+                  type="number"
+                  inputProps={{ step: 0.1 }}
+                  onChange={(event) =>
+                    setRr(parseFloat(event.target.value))
+                  }
+                  required={true}
+                />
+              </FormControl>
+            </Box>
+          </Grid>
+          <Grid item xs={12}>
+            <Box display="flex" alignItems="flex-end" mt={2}>
+              <WaterDropIcon sx={{ color: 'action.active', mr: 2, my: 1.1 }} />
+              <FormControl sx={{ flex: 1 }}>
+                <InputLabel htmlFor="D">D</InputLabel>
+                <Input
+                  name="D"
+                  value={d}
+                  type="number"
+                  inputProps={{ step: 0.1 }}
+                  onChange={(event) =>
+                    setD(parseFloat(event.target.value))
+                  }
+                  required={true}
+                />
+              </FormControl>
+            </Box>
+          </Grid>
+
         </Grid>
         <Box display="flex" justifyContent="center" mt={5}>
           <Button
@@ -203,10 +327,7 @@ const CardForm = ({ card, editMode, setEditMode }) => {
             fullWidth
           >Reset</Button></Box>
       </form>
-
     </Box>
-
   );
 };
-
 export default CardForm;

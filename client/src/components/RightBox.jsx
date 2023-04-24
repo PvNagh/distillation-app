@@ -78,7 +78,7 @@ const RightBox = ({ onEditCard }) => {
                         fontWeight="bold"
                         color={cards.length > 0 ? "#222831" : "textSecondary"}
                     >
-                        {cards.length > 0 ? "Cards" : "Your cards will appear here..."}
+                        { "Dashboard" }
                     </Typography>
                 </Box>
                 <Divider sx={{ mb: 2 }} />
@@ -99,23 +99,23 @@ const RightBox = ({ onEditCard }) => {
                                     subheader={card.date}
                                 />
                                 <CardContent>
-                                    <Typography variant="body1" color="textSecondary">Number of Trays: {card?.numberOfTrays}</Typography>
-                                    <Typography variant="body1" color="textSecondary">Feed Tray Position: {card?.feedTrayPosition}</Typography>
-                                    <Typography variant="body1" color="textSecondary">Feed Composition: {card?.feedComposition}</Typography>
-                                    <Typography variant="body1" color="textSecondary">Feed Temperature: {card?.feedTemperature}</Typography>
-                                    <Typography variant="body1" color="textSecondary">Feed Flow Rate: {card?.flowRate}</Typography>
+                                    <Typography variant="body1" color="textSecondary">Click on <IconButton disabled>
+                                                <PlayCircleFilledWhiteIcon
+                                                />
+                                            </IconButton> to run the simulation. </Typography>
+                                   
                                 </CardContent>
                                 <CardActions>
                                     <Grid container spacing={4} justifyContent="space-between" alignItems="center">
                                         <Grid item>
                                             <IconButton onClick={() => handleCardClick(card)}>
                                                 <PlayCircleFilledWhiteIcon
-                                                    sx={{ color: "#393E46" }}
+                                                    sx={{ color: "#393E46", fontSize:"1.5rem" }}
                                                 />
                                             </IconButton>
                                         </Grid>
                                         <Grid item>
-                                            <Grid container spacing={1} alignItems="center">
+                                            <Grid container spacing={0.5} alignItems="center">
                                                 <Grid item>
                                                     <IconButton onClick={() => handleEditCard(card)}>
                                                         <EditIcon sx={{ color: "#393E46" }} />

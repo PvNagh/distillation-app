@@ -22,23 +22,29 @@ const Modal = ({ open, onClose, card,output}) => {
             onClose={onClose}
             PaperProps={{ sx: dialogStyle }}
         >
-            <DialogTitle>Results:</DialogTitle>
+            <DialogTitle color="#222831">Results:</DialogTitle>
             <DialogContent>
                 <Grid container spacing={2} sx={gridStyle}>
                     <Grid item xs={6}>
                         <Card sx={cardStyle}>
                             <CardContent>
-                                <Typography variant="h6">Input Values:</Typography>
+                                <Typography variant="h6" color="#222831">Input Values:</Typography>
                                 <Typography variant="body1">Number of Trays: {card?.numberOfTrays}</Typography>
                                 <Typography variant="body1">Feed Tray Position: {card?.feedTrayPosition}</Typography>
                                 <Typography variant="body1">Feed Composition: {card?.feedComposition}</Typography>
+                                <Typography variant="body1">Feed Quantity: {card?.feedQuantity}</Typography>
                                 <Typography variant="body1">Feed Temperature: {card?.feedTemperature}</Typography>
                                 <Typography variant="body1">Feed Flow Rate: {card?.flowRate}</Typography>
+                                <Typography variant="body1">Type of condenser: {card?.typeCon}</Typography>
+                                <Typography variant="body1">Column Pressure: {card?.columnPressure}</Typography>
+                                <Typography variant="body1">Reflux Ratio: {card?.rr}</Typography>
+                                <Typography variant="body1">D: {card?.d}</Typography>
+                                
                             </CardContent>
                         </Card>
                         <Card sx={cardStyle}>
                             <CardContent>
-                                <Typography variant="h6">Output Values:</Typography>
+                                <Typography variant="h6" color="#222831">Output Values:</Typography>
                                 <Typography variant="body1">Distillate Composition: {output}</Typography>
                                 <Typography variant="body1">Bottoms Composition: </Typography>
                                 <Typography variant="body1">Distillate Flow Rate: </Typography>
